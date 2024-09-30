@@ -41,6 +41,8 @@ RUN wget --no-check-certificate --progress=dot:mega https://github.com/TEN-frame
     rm -rf tman-*.zip ten_manager
 
 # install ten_gn
-RUN git clone --depth 1 https://github.com/TEN-framework/ten_gn.git /usr/local/ten_gn
+RUN git clone https://github.com/TEN-framework/ten_gn.git /usr/local/ten_gn && \
+    cd /usr/local/ten_gn && \
+    git checkout d6018ddf9b7d7c851bb416a2e77f24fc9719dc4c
 
 ENV PATH=/usr/local/go/bin:/usr/local/ten_gn:$PATH
