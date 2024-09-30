@@ -30,7 +30,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
 ENV PYTHON_VERSION=3.12.6
 RUN wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz && \
     tar -xvf Python-${PYTHON_VERSION}.tgz && cd Python-${PYTHON_VERSION} && \
-    ./configure --enable-optimizations --disable-test-modules --enable-shared --with-lto --with-computed-gotos --with-system-ffi --prefix=/usr && \
+    ./configure --enable-optimizations --enable-loadable-sqlite-extensions --disable-test-modules --enable-shared --with-lto --with-computed-gotos --with-system-ffi --prefix=/usr && \
     make -j && \
     make altinstall && \
     rm -rf ./Python-${PYTHON_VERSION}* && \
