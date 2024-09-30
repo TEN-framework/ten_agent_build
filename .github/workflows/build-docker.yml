@@ -2,9 +2,9 @@ name: Build Docker
 
 on: 
   push:
-    branches: [ "main", "feature/docker" ]
-    # Publish semver tags as releases.
-    tags: [ '*.*.*' ]
+    branches: [ "main" ]
+    tags: 
+      - '**'
     paths-ignore:
       - '**.md'
   pull_request:
