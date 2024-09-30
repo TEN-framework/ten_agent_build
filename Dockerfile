@@ -26,8 +26,6 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     python3 python3-venv python3-pip python3-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
-RUN pip3 install debugpy
-
 # install python3.12 from source
 ENV PYTHON_VERSION=3.12.6
 RUN wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz && \
@@ -35,7 +33,13 @@ RUN wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VER
     ./configure --enable-optimizations --disable-test-modules --enable-shared --with-lto --with-computed-gotos --with-system-ffi --prefix=/usr && \
     make && \
     make altinstall && \
-    rm -rf ./Python-${PYTHON_VERSION}*
+    rm -rf ./Python-${PYTHON_VERSION}* && \
+    ln -sf /usr/bin/python3.12-config /usr/bin/python3-config && \
+    ln -sf /usr/bin/python3.12 /usr/bin/python3 && \
+    ln -sf /usr/bin/python3.12 /usr/bin/python && \
+    ln -sf /usr/bin/pip3.12 /usr/bin/pip3
+
+RUN pip3 install debugpy
 
 # install golang
 RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.22.3.linux-amd64.tar.gz && \
