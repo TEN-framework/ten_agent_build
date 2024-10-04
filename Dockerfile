@@ -29,20 +29,20 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
 RUN pip3 install debugpy
 
 # install golang
-RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.22.3.linux-amd64.tar.gz && \
-    rm -rf /usr/local/go && \
-    tar -C /usr/local -xvf go1.22.3.linux-amd64.tar.gz && \
-    rm go1.22.3.linux-amd64.tar.gz
+RUN export ARCH=$(dpkg --print-architecture) && curl -OL https://go.dev/dl/go1.22.3.linux-${ARCH}.tar.gz && \
+  rm -rf /usr/local/go && tar -C /usr/local -xvf go1.22.3.linux-${ARCH}.tar.gz && rm go1.22.3.linux-${ARCH}.tar.gz
 
 # install tman 
-RUN wget --no-check-certificate --progress=dot:mega https://github.com/TEN-framework/ten_framework/releases/download/0.3.0-alpha/tman-linux-x64-clang-release.zip && \
-    unzip tman-linux-x64-clang-release.zip && \
+RUN export ARCH=$(dpkg --print-architecture) && \
+    if [ ${ARCH} = "amd64" ]; then export ARCH="x64" ; fi && \
+    wget --no-check-certificate --progress=dot:mega https://github.com/TEN-framework/ten_framework/releases/download/0.3.0-alpha/tman-linux-${ARCH}-clang-release.zip && \
+    unzip tman-linux-${ARCH}-clang-release.zip && \
     mv ten_manager/bin/tman /usr/local/bin/ && \
     rm -rf tman-*.zip ten_manager
 
 # install ten_gn
 RUN git clone https://github.com/TEN-framework/ten_gn.git /usr/local/ten_gn && \
     cd /usr/local/ten_gn && \
-    git checkout d6018ddf9b7d7c851bb416a2e77f24fc9719dc4c
+    git checkout 9bbd871c3a645b63a00e21fcb2bedb69848e703e
 
 ENV PATH=/usr/local/go/bin:/usr/local/ten_gn:$PATH
