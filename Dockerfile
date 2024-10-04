@@ -33,12 +33,12 @@ RUN export ARCH=$(dpkg --print-architecture) && curl -OL https://go.dev/dl/go1.2
   rm -rf /usr/local/go && tar -C /usr/local -xvf go1.22.3.linux-${ARCH}.tar.gz && rm go1.22.3.linux-${ARCH}.tar.gz
 
 # install tman 
-RUN export ARCH=$(dpkg --print-architecture) && \
-    if [ ${ARCH} = "amd64" ]; then export ARCH="x64" ; fi && \
-    wget --no-check-certificate --progress=dot:mega https://github.com/TEN-framework/ten_framework/releases/download/0.3.0-alpha/tman-linux-${ARCH}-clang-release.zip && \
-    unzip tman-linux-${ARCH}-clang-release.zip && \
-    mv ten_manager/bin/tman /usr/local/bin/ && \
-    rm -rf tman-*.zip ten_manager
+# RUN export ARCH=$(dpkg --print-architecture) && \
+#     if [ ${ARCH} = "amd64" ]; then export ARCH="x64" ; fi && \
+#     wget --no-check-certificate --progress=dot:mega https://github.com/TEN-framework/ten_framework/releases/download/0.3.0-alpha/tman-linux-${ARCH}-clang-release.zip && \
+#     unzip tman-linux-${ARCH}-clang-release.zip && \
+#     mv ten_manager/bin/tman /usr/local/bin/ && \
+#     rm -rf tman-*.zip ten_manager
 
 # install ten_gn
 RUN git clone https://github.com/TEN-framework/ten_gn.git /usr/local/ten_gn && \
