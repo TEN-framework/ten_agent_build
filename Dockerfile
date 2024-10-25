@@ -35,7 +35,7 @@ RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.22.3.l
     rm go1.22.3.linux-amd64.tar.gz
 
 # install tman 
-RUN wget --no-check-certificate --progress=dot:mega https://github.com/TEN-framework/ten_framework/releases/download/0.3.0/tman-linux-x64-clang-release.zip && \
+RUN wget --no-check-certificate --progress=dot:mega https://github.com/TEN-framework/ten_framework/releases/download/0.3.1/tman-linux-x64-clang-release.zip && \
     unzip tman-linux-x64-clang-release.zip && \
     mv ten_manager/bin/tman /usr/local/bin/ && \
     rm -rf tman-*.zip ten_manager
