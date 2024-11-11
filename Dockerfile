@@ -34,6 +34,9 @@ RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.22.3.l
     tar -C /usr/local -xvf go1.22.3.linux-amd64.tar.gz && \
     rm go1.22.3.linux-amd64.tar.gz
 
+# install task
+RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+
 # install tman 
 RUN wget --no-check-certificate --progress=dot:mega https://github.com/TEN-framework/ten_framework/releases/download/0.4.0/tman-linux-x64-clang-release.zip && \
     unzip tman-linux-x64-clang-release.zip && \
