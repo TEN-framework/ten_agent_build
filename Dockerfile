@@ -12,6 +12,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     make \
     jq \
     zip unzip \
+    tree \
     apt-utils software-properties-common \
     ssh \
     libasound2 \
