@@ -28,7 +28,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     python3 python3-venv python3-pip python3-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
-RUN pip3 install debugpy
+RUN pip3 install debugpy pytest
 
 # install golang
 RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.22.3.linux-amd64.tar.gz && \
