@@ -41,7 +41,7 @@ RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/loc
 
 # install tman 
 RUN wget --no-check-certificate --progress=dot:mega https://github.com/TEN-framework/ten_framework/releases/download/0.6.1/tman-linux-clang-release-x64.zip && \
-    unzip tman-linux-x64-clang-release-x64.zip && \
+    unzip tman-linux-clang-release-x64.zip && \
     mv ten_manager/bin/tman /usr/local/bin/ && \
     rm -rf tman-*.zip ten_manager
 
