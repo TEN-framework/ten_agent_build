@@ -40,8 +40,8 @@ RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.22.3.l
 RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
 
 # install tman 
-RUN wget --no-check-certificate --progress=dot:mega https://github.com/TEN-framework/ten_framework/releases/download/0.6.4/tman-linux-clang-release-x64.zip && \
-    unzip tman-linux-clang-release-x64.zip && \
+RUN wget --no-check-certificate --progress=dot:mega https://github.com/TEN-framework/ten_framework/releases/download/0.7.0/tman-linux-gcc-release-x64.zip && \
+    unzip tman-linux-gcc-release-x64.zip && \
     mv ten_manager/bin/tman /usr/local/bin/ && \
     rm -rf tman-*.zip ten_manager
 
