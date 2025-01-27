@@ -39,6 +39,9 @@ RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.22.3.l
 # install task
 RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
 
+# install oss util
+RUN curl https://gosspublic.alicdn.com/ossutil/install.sh | bash
+
 # install tman 
 RUN wget --no-check-certificate --progress=dot:mega https://github.com/TEN-framework/ten_framework/releases/download/0.8.9/tman-linux-clang-release-x64.zip && \
     unzip tman-linux-clang-release-x64.zip && \
