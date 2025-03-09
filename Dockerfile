@@ -36,6 +36,9 @@ RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.22.3.l
     tar -C /usr/local -xvf go1.22.3.linux-amd64.tar.gz && \
     rm go1.22.3.linux-amd64.tar.gz
 
+# install uv
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
 # install task
 RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
 
