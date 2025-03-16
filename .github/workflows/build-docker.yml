@@ -23,6 +23,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        fetch-tags: true
+        fetch-depth: "0"
     - id: pre-step
       shell: bash
       run: echo "image-tag=$(git describe --tags --always)${{ matrix.IMAGE_TAG_SUFFIX }}" >> $GITHUB_OUTPUT
