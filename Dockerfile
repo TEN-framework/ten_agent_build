@@ -29,12 +29,10 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     python3 python3-venv python3-pip python3-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
-SHELL ["/bin/bash", "-c"]
-
 RUN pip3 install debugpy pytest pytest-cov pytest-mock cython pylint pylint-exit black
 
-# install huggingface_hub tools for cuda based image
-RUN '[[ "${BASE_IMAGE}" =~ cuda ]] && pip3 install "huggingface_hub[cli]" hf_transfer'
+# install tools for cuda based image
+RUN echo "$BASE_IMAGE" | grep -q "cuda" && pip3 install "huggingface_hub[cli]" hf_transfer
 
 # install golang
 RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.22.3.linux-amd64.tar.gz && \
