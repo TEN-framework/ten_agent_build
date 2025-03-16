@@ -13,12 +13,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - BASE_IMAGE: "ubuntu:22.04"
+            IMAGE_TAG_SUFFIX: ""
+          - BASE_IMAGE: "nvidia/cuda:12.4.1-devel-ubuntu22.04"
+            IMAGE_TAG_SUFFIX: "-cuda"
     steps:
     - name: Checkout
       uses: actions/checkout@v4
     - id: pre-step
       shell: bash
-      run: echo "image-tag=$(git describe --tags --always)" >> $GITHUB_OUTPUT
+      run: echo "image-tag=$(git describe --tags --always)${{ matrix.IMAGE_TAG_SUFFIX }}" >> $GITHUB_OUTPUT
     - name: Build & Publish Docker Image
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
@@ -28,3 +35,4 @@ jobs:
         registry: ghcr.io
         tags: "${{ github.ref == 'refs/heads/main' && 'latest,' || '' }}${{ steps.pre-step.outputs.image-tag }}"
         no_push: ${{ github.event_name == 'pull_request' }}
+        buildargs: "BASE_IMAGE=${{ matrix.BASE_IMAGE }}"
