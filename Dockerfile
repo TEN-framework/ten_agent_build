@@ -34,7 +34,7 @@ SHELL ["/bin/bash", "-c"]
 RUN pip3 install debugpy pytest pytest-cov pytest-mock cython pylint pylint-exit black
 
 # install huggingface_hub tools for cuda based image
-RUN [[ "${BASE_IMAGE}" =~ cuda ]] && pip3 install "huggingface_hub[cli]" hf_transfer
+RUN '[[ "${BASE_IMAGE}" =~ cuda ]] && pip3 install "huggingface_hub[cli]" hf_transfer'
 
 # install golang
 RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.22.3.linux-amd64.tar.gz && \
