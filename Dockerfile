@@ -29,6 +29,8 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     python3 python3-venv python3-pip python3-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
+SHELL ["/bin/bash", "-c"]
+
 RUN pip3 install debugpy pytest pytest-cov pytest-mock cython pylint pylint-exit black
 
 # install huggingface_hub tools for cuda based image
