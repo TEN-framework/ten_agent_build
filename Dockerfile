@@ -1,4 +1,5 @@
-FROM ubuntu:22.04
+ARG BASE_IMAGE=ubuntu:22.04
+FROM ${BASE_IMAGE}
 
 RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommends \
     wget \
@@ -29,6 +30,9 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
 RUN pip3 install debugpy pytest pytest-cov pytest-mock cython pylint pylint-exit black
+
+# install tools for cuda based image
+RUN echo "$BASE_IMAGE" | grep -q "cuda" && pip3 install "huggingface_hub[cli]" hf_transfer || true
 
 # install golang
 RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.22.3.linux-amd64.tar.gz && \
