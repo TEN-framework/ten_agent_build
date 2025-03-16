@@ -2,7 +2,7 @@ name: Build Docker
 
 on: 
   push:
-    branches: [ "main" ]
+    branches: [ "main", "feature/cuda" ]
     tags: 
       - '**'
     paths-ignore:
