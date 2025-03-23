@@ -17,9 +17,9 @@ jobs:
       matrix:
         include:
           - BASE_IMAGE: "ubuntu:22.04"
-            IMAGE_TAG_SUFFIX: ""
-          - BASE_IMAGE: "nvidia/cuda:12.4.1-devel-ubuntu22.04"
-            IMAGE_TAG_SUFFIX: "-cuda"
+            IMAGE_TAG_SUFFIX: "-vllm-cpu"
+          # - BASE_IMAGE: "nvidia/cuda:12.4.1-devel-ubuntu22.04"
+          #   IMAGE_TAG_SUFFIX: "-cuda"
     steps:
     - name: Checkout
       uses: actions/checkout@v4

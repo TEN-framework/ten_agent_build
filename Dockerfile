@@ -20,6 +20,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     libgstreamer1.0-dev \
     libsamplerate-dev \
     libunwind-dev \
+    libnuma-dev \
     gcc \
     g++ \
     libc++1 \
@@ -30,6 +31,22 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
 RUN pip3 install debugpy pytest pytest-cov pytest-mock cython pylint pylint-exit black
+
+# install vllm
+#RUN pip install vllm
+RUN git clone https://github.com/vllm-project/vllm.git
+RUN pip install cmake>=3.26 wheel packaging ninja "setuptools-scm>=8" numpy
+RUN cd vllm && pip install -v -r requirements/cpu.txt --extra-index-url https://download.pytorch.org/whl/cpu
+RUN git clone -b rls-v3.5 https://github.com/oneapi-src/oneDNN.git
+RUN cmake -B ./oneDNN/build -S ./oneDNN -G Ninja -DONEDNN_LIBRARY_TYPE=STATIC \
+    -DONEDNN_BUILD_DOC=OFF \
+    -DONEDNN_BUILD_EXAMPLES=OFF \
+    -DONEDNN_BUILD_TESTS=OFF \
+    -DONEDNN_BUILD_GRAPH=OFF \
+    -DONEDNN_ENABLE_WORKLOAD=INFERENCE \
+    -DONEDNN_ENABLE_PRIMITIVE=MATMUL
+RUN cmake --build ./oneDNN/build --target install --config Release -j 1
+RUN cd vllm && VLLM_TARGET_DEVICE=cpu MAX_JOBS=2 python3 setup.py install
 
 # install tools for cuda based image
 RUN echo "$BASE_IMAGE" | grep -q "cuda" && pip3 install "huggingface_hub[cli]" hf_transfer || true
