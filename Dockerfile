@@ -20,6 +20,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     libgstreamer1.0-dev \
     libsamplerate-dev \
     libunwind-dev \
+    libfmt-dev \
     gcc \
     g++ \
     libc++1 \
