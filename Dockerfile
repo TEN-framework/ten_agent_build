@@ -27,8 +27,41 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     gdb \
     gpg-agent \
     ca-certificates \
-    python3 python3-venv python3-pip python3-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
+
+# install python3.12
+RUN add-apt-repository ppa:deadsnakes/ppa -y && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python3.12 \
+    python3.12-dev \
+    python3.12-venv \
+    python3.12-distutils \
+    && rm -rf /var/lib/apt/lists/*
+
+# set python3.12 as default
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 312 \
+    && update-alternatives --install /usr/bin/python python /usr/bin/python3.12 312 \
+    && update-alternatives --set python3 /usr/bin/python3.12 \
+    && update-alternatives --set python /usr/bin/python3.12
+
+# install latest pip
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12 && \
+    python3.12 -m pip install --no-cache-dir --upgrade pip setuptools wheel && \
+    ln -s /usr/local/bin/pip /usr/local/bin/pip3.12
+
+# verify python versions
+RUN python --version && \
+    python3 --version && \
+    pip --version && \
+    pip3.12 --version && \
+    python3.12 -c "import venv; print('venv module available')" && \
+    python3.12-config --includes  # verify python dev
+
+# clear cache
+RUN apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN pip3 install debugpy pytest pytest-cov pytest-mock cython pylint pylint-exit black
 
