@@ -29,12 +29,6 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     gpg-agent \
     ca-certificates
 
-# clean up python3.10
-RUN apt-get purge -y python3.10* \
-    && rm -rf /usr/lib/python3.10* \
-    && rm -rf /usr/local/lib/python3.10* \
-    && rm -f /usr/bin/python3.10*
-
 # install python3.12
 RUN add-apt-repository ppa:deadsnakes/ppa -y && \
     apt-get update && \
@@ -62,9 +56,10 @@ RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12 && \
 RUN python --version && \
     python3 --version && \
     pip --version && \
-    pip3.12 --version && \
+    pip3 --version && \
     python3.12 -c "import venv; print('venv module available')" && \
     python-config --version && \
+    python3-config --version && \
     python-config --includes --libs --cflags
 
 # clear cache
