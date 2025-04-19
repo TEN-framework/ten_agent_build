@@ -26,7 +26,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     libc++1 \
     gdb \
     gpg-agent \
-    ca-certificates \
+    ca-certificates && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
 # install python3.12
