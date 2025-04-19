@@ -1,6 +1,7 @@
 ARG BASE_IMAGE=ubuntu:22.04
 FROM ${BASE_IMAGE}
 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommends \
     wget \
     curl \
@@ -26,8 +27,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     libc++1 \
     gdb \
     gpg-agent \
-    ca-certificates && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
+    ca-certificates
 
 # install python3.12
 RUN add-apt-repository ppa:deadsnakes/ppa -y && \
