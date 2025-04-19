@@ -46,8 +46,7 @@ RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 3
 
 # install latest pip
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12 && \
-    python3.12 -m pip install --no-cache-dir --upgrade pip setuptools wheel && \
-    ln -s /usr/local/bin/pip /usr/local/bin/pip3.12
+    python3.12 -m pip install --no-cache-dir --upgrade pip setuptools wheel
 
 # verify python versions
 RUN python --version && \
