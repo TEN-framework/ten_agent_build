@@ -27,7 +27,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     gdb \
     gpg-agent \
     ca-certificates \
-    python3 python3-venv python3-pip python3-dev portaudio19-dev python3-pyaudio && \
+    python3 python3-venv python3-pip python3-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
 RUN pip3 install debugpy pytest pytest-cov pytest-mock cython pylint pylint-exit black pre-commit pyright
