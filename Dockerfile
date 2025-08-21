@@ -32,6 +32,21 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
 
 RUN pip3 install debugpy pytest pytest-cov pytest-mock cython pylint pylint-exit black pre-commit pyright
 
+ENV NVM_DIR=/root/.nvm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+# Install Node.js 22 and set as default
+RUN . "$NVM_DIR/nvm.sh" \
+    && nvm install 22 \
+    && nvm alias default 22 \
+    && nvm use default
+
+# Ensure node and npm are available in subsequent RUN commands
+ENV PATH="$NVM_DIR/versions/node/$(ls $NVM_DIR/versions/node/)/bin:$PATH"
+
+# Verify installation
+RUN node -v && npm -v
+
 # install tools for cuda based image
 RUN echo "$BASE_IMAGE" | grep -q "cuda" && pip3 install "huggingface_hub[cli]" hf_transfer || true
 
