@@ -1,6 +1,9 @@
 ARG BASE_IMAGE=ubuntu:22.04
 FROM ${BASE_IMAGE}
 
+# Use bash so we can "source" nvm.sh and do command substitution reliably
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommends \
     wget \
     curl \
@@ -32,19 +35,20 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
 
 RUN pip3 install debugpy pytest pytest-cov pytest-mock cython pylint pylint-exit black pre-commit pyright
 
+# --- nvm + Node.js 22 (with symlinks so node/npm are always on PATH)
 ENV NVM_DIR=/root/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-
-# Install Node.js 22 and set as default
 RUN . "$NVM_DIR/nvm.sh" \
-    && nvm install 22 \
-    && nvm alias default 22 \
-    && nvm use default
+ && nvm install 22 \
+ && nvm alias default 22 \
+ && nvm use default \
+ # symlink node/npm/npx into a global PATH directory
+ && ln -sf "$(nvm which current)" /usr/local/bin/node \
+ && ln -sf "$(dirname "$(nvm which current)")/npm" /usr/local/bin/npm \
+ && ln -sf "$(dirname "$(nvm which current)")/npx" /usr/local/bin/npx \
+ && corepack enable || true
 
-# Ensure node and npm are available in subsequent RUN commands
-ENV PATH="$NVM_DIR/versions/node/$(ls $NVM_DIR/versions/node/)/bin:$PATH"
-
-# Verify installation
+# verify node is available in a fresh layer
 RUN node -v && npm -v
 
 # install tools for cuda based image
