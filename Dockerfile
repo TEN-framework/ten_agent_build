@@ -30,8 +30,8 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     gdb \
     gpg-agent \
     ca-certificates \
-    python3 python3-venv python3-pip python3-dev && \
     unzip \
+    python3 python3-venv python3-pip python3-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
 RUN pip3 install debugpy pytest pytest-cov pytest-mock cython pylint==3.3.9 pylint-exit black pre-commit pyright
@@ -54,7 +54,6 @@ RUN node -v && npm -v
 
 # install Bun(The unzip package is required to install Bun)
 RUN curl -fsSL https://bun.com/install | bash
-RUN bun -v
 
 # install tools for cuda based image
 RUN echo "$BASE_IMAGE" | grep -q "cuda" && pip3 install "huggingface_hub[cli]" hf_transfer || true
