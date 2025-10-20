@@ -84,4 +84,4 @@ RUN git clone https://github.com/TEN-framework/ten_gn.git /usr/local/ten_gn && \
     cd /usr/local/ten_gn && \
     git checkout 0.1.1
 
-ENV PATH=/usr/local/go/bin:/usr/local/ten_gn:$PATH
+ENV PATH=/root/.bun/bin:/usr/local/go/bin:/usr/local/ten_gn:$PATH
