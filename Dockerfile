@@ -9,6 +9,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     curl \
     vim \
     git \
+    patch \
     libssl-dev \
     libcrypto++-dev \
     zlib1g-dev \
