@@ -60,10 +60,10 @@ RUN curl -fsSL https://bun.com/install | bash
 RUN echo "$BASE_IMAGE" | grep -q "cuda" && pip3 install "huggingface_hub[cli]" hf_transfer || true
 
 # install golang
-RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.22.3.linux-amd64.tar.gz && \
+RUN wget --no-check-certificate --progress=dot:mega https://go.dev/dl/go1.26.4.linux-amd64.tar.gz && \
     rm -rf /usr/local/go && \
-    tar -C /usr/local -xvf go1.22.3.linux-amd64.tar.gz && \
-    rm go1.22.3.linux-amd64.tar.gz
+    tar -C /usr/local -xvf go1.26.4.linux-amd64.tar.gz && \
+    rm go1.26.4.linux-amd64.tar.gz
 
 # install uv
 RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/usr/local/bin" sh
