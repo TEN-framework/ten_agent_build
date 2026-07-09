@@ -28,6 +28,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     gcc \
     g++ \
     libc++1 \
+    libatomic1 \
     gdb \
     gpg-agent \
     ca-certificates \
@@ -38,21 +39,23 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
 
 RUN pip3 install debugpy pytest pytest-cov pytest-mock cython pylint==3.3.9 pylint-exit black==25.12.0 pre-commit pyright ruff==0.14.10
 
-# --- nvm + Node.js 22 (with symlinks so node/npm are always on PATH)
+# --- nvm + Node.js 24 (with symlinks so node/npm are always on PATH)
 ENV NVM_DIR=/root/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 RUN . "$NVM_DIR/nvm.sh" \
- && nvm install 22 \
- && nvm alias default 22 \
+ && nvm install 24 \
+ && nvm alias default 24 \
  && nvm use default \
  # symlink node/npm/npx into a global PATH directory
  && ln -sf "$(nvm which current)" /usr/local/bin/node \
  && ln -sf "$(dirname "$(nvm which current)")/npm" /usr/local/bin/npm \
  && ln -sf "$(dirname "$(nvm which current)")/npx" /usr/local/bin/npx \
- && corepack enable || true
+ && npm install -g @commitlint/cli@21.2.1 @commitlint/config-conventional@21.2.0 \
+ && ln -sf "$(dirname "$(nvm which current)")/commitlint" /usr/local/bin/commitlint \
+ && (corepack enable || true)
 
-# verify node is available in a fresh layer
-RUN node -v && npm -v
+# verify node tooling is available in a fresh layer
+RUN dpkg -s libatomic1 >/dev/null && node -v && npm -v && commitlint --version
 
 # install Bun(The unzip package is required to install Bun)
 RUN curl -fsSL https://bun.com/install | bash
