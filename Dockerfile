@@ -10,6 +10,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     vim \
     git \
     patch \
+    file \
     libssl-dev \
     libcrypto++-dev \
     zlib1g-dev \
@@ -23,6 +24,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommend
     libasound2 \
     libgstreamer1.0-dev \
     libsamplerate-dev \
+    libopus-dev \
     libunwind-dev \
     libfmt-dev \
     gcc \
